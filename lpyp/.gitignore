@@ -1,0 +1,9 @@
+# Build artifacts
+*.o
+*.a
+
+# OS-specific files
+.DS_Store
+
+# compilation
+compile_flags.txt
