@@ -53,3 +53,8 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# miscellaneous
+compile_flags.txt
+authorized_functions.txt
+ft_nm
