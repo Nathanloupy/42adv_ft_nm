@@ -3,6 +3,7 @@
 #include "lpyp.h"
 #include <errno.h>
 #include <string.h>
+#include <fcntl.h>
 
 #define FT_NM_NAME "ft_nm"
 #define FT_NM_DESC "List symbols in [FILES...] (a.out by default)."
@@ -11,7 +12,7 @@
 /* ENUMS */
 typedef enum e_context_flags
 {
-	FT_NM_HELP_USAGE_FLAG = 1 << 0
+	FT_NM_VOID = 1 << 0
 }	t_context_flags;
 
 /* STRUCTS */
@@ -19,6 +20,7 @@ typedef struct s_file
 {
 	char			*filepath;
 	int				fd;
+	int				recoverable_error;
 	struct s_file	*next;
 }	t_file;
 
@@ -26,6 +28,7 @@ typedef struct s_nm_context
 {
 	t_file			*files;
 	t_context_flags	flags;
+	int				recoverable_error;
 }	t_nm_context;
 
 /* FILES */
@@ -39,7 +42,11 @@ void	fldelete(void *data);
 
 /* UTILS */
 int		safe_return(t_nm_context *context, int status);
-void	ft_nm_perror(char *function_name);
+void	safe_close(t_file *file);
+void	ft_nm_perror(char *arg);
 
 /* PARSER */
 int		parse_arguments(int argc, char *argv[], t_nm_context *context);
+
+/* FILES HANDLING */
+int		handle_files(t_nm_context *context);

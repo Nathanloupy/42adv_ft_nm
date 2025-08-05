@@ -38,7 +38,7 @@ static int	ft_nm_parser(unsigned int key, void *data, char *argument)
 			t_file	*file = ft_flnew(argument, -1);
 			if (!file)
 			{
-				ft_nm_perror("ft_calloc");
+				ft_nm_perror(NULL);
 				return (safe_return(context, 1));
 			}
 			ft_fladd_back(&context->files, file);

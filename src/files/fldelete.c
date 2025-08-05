@@ -12,10 +12,6 @@ void	fldelete(void *data)
 	if (!data)
 		return ;
 	file = (t_file *)data;
-	if (file->fd > 2)
-	{
-		close(file->fd);
-		file->fd = -1;
-	}
+	safe_close(file);
 	file->filepath = NULL;
 }
