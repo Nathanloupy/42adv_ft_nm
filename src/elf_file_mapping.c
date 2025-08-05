@@ -1,5 +1,13 @@
 #include "commons.h"
 
+/**
+ * @brief Map an ELF file into memory, update recoverable error if any
+ * 
+ * @note The file is not closed, it is the responsibility of the caller to close it
+ * @param file 
+ * @retval 1 Error
+ * @retval 0 Success
+ */
 int	map_elf_file(t_file *file)
 {
 	struct stat st;

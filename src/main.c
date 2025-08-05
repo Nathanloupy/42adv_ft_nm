@@ -1,5 +1,13 @@
 #include "commons.h"
 
+/**
+ * @brief 
+ * 
+ * @param argc 
+ * @param argv 
+ * @retval 1 Error
+ * @retval 0 Success
+ */
 int	main(int argc, char **argv)
 {
 	t_nm_context	context;
