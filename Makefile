@@ -15,6 +15,7 @@ SRCS_MAIN	= src/main.c \
 				src/parser.c \
 				src/files_handling.c \
 				src/elf_file_mapping.c \
+				src/elf_header_validation.c \
 
 SRCS_UTILS	= src/utils/safe_handling.c \
 				src/utils/print_error.c \

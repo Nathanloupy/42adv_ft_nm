@@ -7,10 +7,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+#include <elf.h>
 
 #define FT_NM_NAME "ft_nm"
 #define FT_NM_DESC "List symbols in [FILES...] (a.out by default)."
 #define FT_NM_DEFAULT_FILE "a.out"
+
+#define FT_NM_FILE_FORMAT_ERROR "file format not recognized"
 
 /* ENUMS */
 
@@ -47,9 +50,10 @@ int		ft_flsize(t_file *file);
 void	fldelete(void *data);
 
 /* UTILS */
+void	safe_cleanup_file(t_file *file);
 int		safe_return(t_nm_context *context, int status);
-void	safe_close(t_file *file);
 void	ft_nm_perror(char *arg);
+void	ft_nm_error_custom(char *arg, char *error_message);
 
 /* PARSER */
 int		parse_arguments(int argc, char *argv[], t_nm_context *context);
@@ -59,3 +63,6 @@ int		handle_files(t_nm_context *context);
 
 /* ELF FILE HANDLING */
 int		map_elf_file(t_file *file);
+
+/* ELF HEADER VALIDATION */
+int		validate_elf_header(t_file *file);

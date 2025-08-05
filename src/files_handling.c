@@ -25,10 +25,10 @@ static int	handle_single_file(t_file *file)
 	if (!file)
 		return (0);
 	if (map_elf_file(file) || file->recoverable_error)
-		return (1);
-	safe_close(file);
-	munmap(file->elf_data.data, file->elf_data.size);
-	return (0);
+		return (safe_cleanup_file(file), 1);
+	if (validate_elf_header(file) || file->recoverable_error)
+		return (safe_cleanup_file(file), 1);
+	return (safe_cleanup_file(file), 0);
 }
 
 /**
