@@ -17,14 +17,17 @@ static int	open_file(t_file *file)
  * @brief Handle a single file, executing the ft_nm command on it, update recoverable error if any
  * 
  * @param file 
- * @retval 1 Unrecoverable error
+ * @retval 1 Error
  * @retval 0 Success
  */
 static int	handle_single_file(t_file *file)
 {
 	if (!file)
 		return (0);
+	if (map_elf_file(file) || file->recoverable_error)
+		return (1);
 	safe_close(file);
+	munmap(file->elf_data.data, file->elf_data.size);
 	return (0);
 }
 
@@ -32,7 +35,7 @@ static int	handle_single_file(t_file *file)
  * @brief Iterate over the files, update recoverable error if any
  * 
  * @param context 
- * @retval 1 Unrecoverable error
+ * @retval 1 Error
  * @retval 0 Success
  */
 static int	iterate_over_files(t_nm_context *context)
@@ -51,7 +54,7 @@ static int	iterate_over_files(t_nm_context *context)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		ft_putstr_fd(file->filepath, STDOUT_FILENO);
 		ft_putstr_fd(": \n", STDOUT_FILENO);
-		if (handle_single_file(file)) //TODO: in a case an unrecoverable error occured, we should return and exit asap
+		if (handle_single_file(file) && !file->recoverable_error)
 			return (1); //TODO: maybe later print the result after the whole file is processed
 		context->recoverable_error |= file->recoverable_error;
 		file = file->next;

@@ -14,6 +14,7 @@ LIBFT_LIB	= $(LPYP_DIR)/libft/libft.a
 SRCS_MAIN	= src/main.c \
 				src/parser.c \
 				src/files_handling.c \
+				src/elf_file_mapping.c \
 
 SRCS_UTILS	= src/utils/safe_handling.c \
 				src/utils/print_error.c \
