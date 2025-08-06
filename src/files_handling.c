@@ -28,7 +28,8 @@ static int	handle_single_file(t_file *file)
 		return (safe_cleanup_file(file), 1);
 	if (validate_elf_header(file) || file->recoverable_error)
 		return (safe_cleanup_file(file), 1);
-	write(1, file->elf_data.data, file->elf_data.size);
+	if (find_symbol_table(file) || file->recoverable_error)
+		return (safe_cleanup_file(file), 1);
 	return (safe_cleanup_file(file), 0);
 }
 

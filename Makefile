@@ -5,7 +5,7 @@ CCFLAGS		= -Wall -Wextra -Werror
 
 NAME		= ft_nm
 
-INCLUDES	= -I./include/ -I./lpyp/include -I./lpyp/libft
+INCLUDES	= -I./include/ -I./lpyp/include -I./lpyp/libft -I./lpyp/libft/ft_printf
 
 LPYP_DIR	= lpyp
 LPYP_LIB	= $(LPYP_DIR)/lpyp.a
@@ -16,6 +16,7 @@ SRCS_MAIN	= src/main.c \
 				src/files_handling.c \
 				src/elf_file_mapping.c \
 				src/elf_header_validation.c \
+				src/find_symbol_table.c \
 
 SRCS_UTILS	= src/utils/safe_handling.c \
 				src/utils/print_error.c \

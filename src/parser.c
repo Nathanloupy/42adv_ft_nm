@@ -28,11 +28,15 @@ static int	ft_nm_parser(unsigned int key, void *data, char *argument)
 	switch (key)
 	{
 		case 'h':
+		{
 			lpyp_help(ft_nm_options, FT_NM_NAME, FT_NM_DESC);
 			exit(safe_return(context, 0));
+		}
 		case 'u':
+		{
 			lpyp_usage(ft_nm_options, FT_NM_NAME);
 			exit(safe_return(context, 0));
+		}
 		case LPYP_KEY_ARG:
 		{
 			t_file	*file = ft_flnew(argument, -1);
@@ -45,9 +49,11 @@ static int	ft_nm_parser(unsigned int key, void *data, char *argument)
 			break;
 		}
 		case LPYP_KEY_END:
+		{
 			if (ft_flsize(context->files) == 0)
 				return (ft_nm_parser(LPYP_KEY_ARG, data, FT_NM_DEFAULT_FILE));
 			break;
+		}
 		case LPYP_KEY_UNKNOWN:
 		{
 			lpyp_help(ft_nm_options, FT_NM_NAME, FT_NM_DESC);
