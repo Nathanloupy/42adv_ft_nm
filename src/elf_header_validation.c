@@ -1,4 +1,4 @@
-#include "commons.h"
+#include "ft_nm.h"
 
 /**
  * @brief Check if the ELF header is valid, update recoverable error if any

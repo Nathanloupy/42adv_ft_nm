@@ -1,4 +1,4 @@
-#include "commons.h"
+#include "ft_nm.h"
 
 /**
  * @brief Open a file
@@ -28,6 +28,7 @@ static int	handle_single_file(t_file *file)
 		return (safe_cleanup_file(file), 1);
 	if (validate_elf_header(file) || file->recoverable_error)
 		return (safe_cleanup_file(file), 1);
+	write(1, file->elf_data.data, file->elf_data.size);
 	return (safe_cleanup_file(file), 0);
 }
 
