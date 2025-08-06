@@ -23,6 +23,11 @@ typedef struct s_elf_data {
 	size_t	size;
 	int		is_64bit;
 	int		is_big_endian;
+	void	*symtab;
+	void	*strtab;
+	size_t	symtab_size;
+	size_t	strtab_size;
+	size_t	symtab_entsize;
 }	t_elf_data;
 
 typedef struct s_file
@@ -54,6 +59,7 @@ void	safe_cleanup_file(t_file *file);
 int		safe_return(t_nm_context *context, int status);
 void	ft_nm_perror(char *arg);
 void	ft_nm_error_custom(char *arg, char *error_message);
+int		error_file_format(t_file *file);
 
 /* PARSER */
 int		parse_arguments(int argc, char *argv[], t_nm_context *context);
@@ -66,3 +72,6 @@ int		map_elf_file(t_file *file);
 
 /* ELF HEADER VALIDATION */
 int		validate_elf_header(t_file *file);
+
+/* ELF SYMBOL TABLE */
+int		find_symbol_table(t_file *file);

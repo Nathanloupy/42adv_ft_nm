@@ -10,21 +10,15 @@
 int	validate_elf_header(t_file *file)
 {
 	unsigned char *e_ident;
-	
-	if (file->elf_data.size < sizeof(Elf64_Ehdr))
-	{
-		ft_nm_error_custom(file->filepath, FT_NM_FILE_FORMAT_ERROR);
-		file->recoverable_error = 1;
-		return (1);
-	}
+
 	e_ident = (unsigned char *)file->elf_data.data;
-	if (ft_memcmp(e_ident, ELFMAG, SELFMAG) != 0)
-	{
-		ft_nm_error_custom(file->filepath, FT_NM_FILE_FORMAT_ERROR);
-		file->recoverable_error = 1;
-		return (1);
-	}
+	if (file->elf_data.size < EI_CLASS)
+		return (error_file_format(file));
 	file->elf_data.is_64bit = (e_ident[EI_CLASS] == ELFCLASS64);
+	if (file->elf_data.size < (file->elf_data.is_64bit ? sizeof(Elf64_Ehdr) : sizeof(Elf32_Ehdr)))
+		return (error_file_format(file));
+	if (ft_memcmp(e_ident, ELFMAG, SELFMAG) != 0)
+		return (error_file_format(file));
 	file->elf_data.is_big_endian = (e_ident[EI_DATA] == ELFDATA2MSB);
 	return (0);
 }
