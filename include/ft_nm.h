@@ -75,3 +75,6 @@ int		validate_elf_header(t_file *file);
 
 /* ELF SYMBOL TABLE */
 int		find_symbol_table(t_file *file);
+
+/* SYMBOL PARSING */
+int		parse_symbols(t_file *file);

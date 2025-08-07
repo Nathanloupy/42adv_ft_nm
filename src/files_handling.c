@@ -30,6 +30,8 @@ static int	handle_single_file(t_file *file)
 		return (safe_cleanup_file(file), 1);
 	if (find_symbol_table(file) || file->recoverable_error)
 		return (safe_cleanup_file(file), 1);
+	if (parse_symbols(file) || file->recoverable_error)
+		return (safe_cleanup_file(file), 1);
 	return (safe_cleanup_file(file), 0);
 }
 
