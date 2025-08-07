@@ -66,9 +66,7 @@ static int	find_symbol_table_64(t_file *file)
 
 	if (ehdr->e_shoff == 0 || ehdr->e_shnum == 0 || ehdr->e_shentsize != sizeof(Elf64_Shdr) || ehdr->e_shoff + (ehdr->e_shnum * ehdr->e_shentsize) > file->elf_data.size)
 		return (error_file_format(file));
-	if (search_symbol_table_64(file, ehdr, shdr, SHT_SYMTAB) == 0)
-		return (0);
-	if (0 && search_symbol_table_64(file, ehdr, shdr, SHT_DYNSYM) == 0) //TODO: implement -D option
+	if (!search_symbol_table_64(file, ehdr, shdr, SHT_SYMTAB))
 		return (0);
 	ft_nm_error_custom(file->filepath, "no symbols");
 	file->recoverable_error = 1;
@@ -141,9 +139,7 @@ static int	find_symbol_table_32(t_file *file)
 
 	if (ehdr->e_shoff == 0 || ehdr->e_shnum == 0 || ehdr->e_shentsize != sizeof(Elf32_Shdr) || ehdr->e_shoff + (ehdr->e_shnum * ehdr->e_shentsize) > file->elf_data.size)
 		return (error_file_format(file));
-	if (search_symbol_table_32(file, ehdr, shdr, SHT_SYMTAB) == 0)
-		return (0);
-	if (0 && search_symbol_table_32(file, ehdr, shdr, SHT_DYNSYM) == 0) //TODO: implement -D option
+	if (!search_symbol_table_32(file, ehdr, shdr, SHT_SYMTAB))
 		return (0);
 	ft_nm_error_custom(file->filepath, "no symbols");
 	file->recoverable_error = 1;
