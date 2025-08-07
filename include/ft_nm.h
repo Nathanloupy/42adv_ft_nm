@@ -18,16 +18,24 @@
 /* ENUMS */
 
 /* STRUCTS */
+typedef struct s_symbol {
+	char			*name;
+	unsigned long	value;
+	char			type_char;
+}	t_symbol;
+
 typedef struct s_elf_data {
-	void	*data;
-	size_t	size;
-	int		is_64bit;
-	int		is_big_endian;
-	void	*symtab;
-	void	*strtab;
-	size_t	symtab_size;
-	size_t	strtab_size;
-	size_t	symtab_entsize;
+	void		*data;
+	size_t		size;
+	int			is_64bit;
+	int			is_big_endian;
+	void		*symtab;
+	void		*strtab;
+	size_t		symtab_size;
+	size_t		strtab_size;
+	size_t		symtab_entsize;
+	t_symbol	*parsed_symbols;
+	size_t		parsed_symbols_size;
 }	t_elf_data;
 
 typedef struct s_file
@@ -75,3 +83,12 @@ int		validate_elf_header(t_file *file);
 
 /* ELF SYMBOL TABLE */
 int		find_symbol_table(t_file *file);
+
+/* SYMBOL PARSING */
+int		parse_symbols(t_file *file);
+
+/* SYMBOL SORTING */
+int		sort_symbols(t_file *file);
+
+/* SYMBOL DISPLAY */
+int		display_symbols(t_file *file);

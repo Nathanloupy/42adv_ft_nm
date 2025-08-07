@@ -31,6 +31,20 @@ static void	safe_munmap(t_file *file)
 }
 
 /**
+ * @brief Safe free parsed symbols function from a file struct
+ * 
+ * @param file 
+ */
+void	safe_free_parsed_symbols(t_file *file)
+{
+	if (!file || !file->elf_data.parsed_symbols)
+		return ;
+	free(file->elf_data.parsed_symbols);
+	file->elf_data.parsed_symbols = NULL;
+	file->elf_data.parsed_symbols_size = 0;
+}
+
+/**
  * @brief Safely clean up a file struct
  * 
  * @param file 
@@ -39,6 +53,7 @@ void	safe_cleanup_file(t_file *file)
 {
 	safe_close(file);
 	safe_munmap(file);
+	safe_free_parsed_symbols(file);
 }
 
 /**
