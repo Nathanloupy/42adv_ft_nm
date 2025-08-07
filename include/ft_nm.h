@@ -86,3 +86,9 @@ int		find_symbol_table(t_file *file);
 
 /* SYMBOL PARSING */
 int		parse_symbols(t_file *file);
+
+/* SYMBOL SORTING */
+int		sort_symbols(t_file *file);
+
+/* SYMBOL DISPLAY */
+int		display_symbols(t_file *file);

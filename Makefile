@@ -18,6 +18,8 @@ SRCS_MAIN	= src/main.c \
 				src/elf_header_validation.c \
 				src/find_symbol_table.c \
 				src/parse_symbols.c \
+				src/sort_symbols.c \
+				src/display_symbols.c
 
 SRCS_UTILS	= src/utils/safe_handling.c \
 				src/utils/print_error.c \

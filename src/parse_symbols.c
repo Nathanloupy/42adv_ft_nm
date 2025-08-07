@@ -84,6 +84,7 @@ static int	parse_symbols_64(t_file *file)
 		sym_parsed_count++;
 		i++;
 	}
+	file->elf_data.parsed_symbols_size = sym_parsed_count;
 	return (0);
 }
 
@@ -135,6 +136,7 @@ static int	parse_symbols_32(t_file *file)
 		sym_parsed_count++;
 		i++;
 	}
+	file->elf_data.parsed_symbols_size = sym_parsed_count;
 	return (0);
 }
 
