@@ -11,6 +11,18 @@ static int	is_undefined_symbol(t_symbol *symbol)
 }
 
 /**
+ * @brief Check if a symbol is an external symbol
+ * 
+ * @param symbol The symbol to check
+ * @retval 1 External
+ * @retval 0 Not external
+ */
+static int	is_external_symbol(t_symbol *symbol)
+{
+	return (('A' <= symbol->type_char && symbol->type_char <= 'Z') || is_undefined_symbol(symbol));
+}
+
+/**
  * @brief Print a hexadecimal value in lower case
  * 
  * @param value The value to print
@@ -51,6 +63,8 @@ static void	print_hex_lower(unsigned long value, char is16byte)
 static void	display_single_symbol(t_symbol *symbol, t_file *file)
 {
 	if (!is_undefined_symbol(symbol) && (file->context->flags & FT_NM_UNDEFINED_ONLY_FLAG))
+		return ;
+	if (!is_external_symbol(symbol) && (file->context->flags & FT_NM_EXTERN_ONLY_FLAG))
 		return ;
 	if (is_undefined_symbol(symbol))
 		ft_putstr_fd("                ", 1);
