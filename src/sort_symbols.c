@@ -1,20 +1,35 @@
 #include "ft_nm.h"
 
 /**
- * @brief Compare two strings in ASCII order
+ * @brief Compare two symbols
  * 
- * @param s1 The first string to compare
- * @param s2 The second string to compare
- * @return int 
+ * @param s1 The first symbol to compare
+ * @param s2 The second symbol to compare
+ * @return int
  */
-static int	ft_nm_strcmp(char *s1, char *s2)
+static int	compare_symbols_fast(t_symbol *s1, t_symbol *s2)
 {
-	int		i;
+	char	*str1 = s1->name;
+	char	*str2 = s2->name;
+	int		i = 0;
 
-	i = 0;
-	while (s1[i] && s1[i] == s2[i])
+	while (str1[i] && str1[i] == str2[i])
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if (str1[i] != str2[i])
+		return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+	if (s1->value != s2->value)
+		return (s1->value < s2->value ? -1 : 1);
+	return ((unsigned char)s1->type_char - (unsigned char)s2->type_char);
+}
+
+/**
+ * @brief Optimized swap function
+ */
+static void	fast_swap(t_symbol *a, t_symbol *b)
+{
+	t_symbol temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
 /**
@@ -26,30 +41,35 @@ static int	ft_nm_strcmp(char *s1, char *s2)
  */
 int	sort_symbols(t_file *file)
 {
-	t_symbol	temp;
 	size_t		i;
 	size_t		j;
-	char		*name_i;
-	char		*name_j;
-	int			multiplier = 1;
+	size_t		n;
+	int			multiplier;
+	int			swapped;
+	int			cmp_result;
+	t_symbol	*symbols;
 
 	if (file->context->flags & FT_NM_NO_SORT_FLAG)
 		return (0);
-	if (file->context->flags & FT_NM_REVERSE_SORT_FLAG)
-		multiplier = -1;
-	for (i = 0; i < file->elf_data.parsed_symbols_size; i++)
+	n = file->elf_data.parsed_symbols_size;
+	if (n <= 1)
+		return (0);
+	symbols = file->elf_data.parsed_symbols;
+	multiplier = (file->context->flags & FT_NM_REVERSE_SORT_FLAG) ? -1 : 1;
+	for (i = 0; i < n - 1; i++)
 	{
-		for (j = i + 1; j < file->elf_data.parsed_symbols_size; j++)
+		swapped = 0;
+		for (j = 0; j < n - i - 1; j++)
 		{
-			name_i = file->elf_data.parsed_symbols[i].name;
-			name_j = file->elf_data.parsed_symbols[j].name;
-			if (ft_nm_strcmp(name_i, name_j) * multiplier > 0)
+			cmp_result = compare_symbols_fast(&symbols[j], &symbols[j + 1]);
+			if (cmp_result * multiplier > 0)
 			{
-				temp = file->elf_data.parsed_symbols[i];
-				file->elf_data.parsed_symbols[i] = file->elf_data.parsed_symbols[j];
-				file->elf_data.parsed_symbols[j] = temp;
+				fast_swap(&symbols[j], &symbols[j + 1]);
+				swapped = 1;
 			}
 		}
+		if (!swapped)
+			break;
 	}
 	return (0);
 }

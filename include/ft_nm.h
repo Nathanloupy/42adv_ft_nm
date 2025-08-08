@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <elf.h>
 
-#define FT_NM_NAME "ft_nm"
+#define FT_NM_NAME "nm"
 #define FT_NM_DESC "List symbols in [FILES...] (a.out by default)."
 #define FT_NM_DEFAULT_FILE "a.out"
 
