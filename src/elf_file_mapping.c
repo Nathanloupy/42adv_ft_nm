@@ -19,6 +19,12 @@ int	map_elf_file(t_file *file)
 		return (0);
 	}
 	file->elf_data.size = st.st_size;
+	if (st.st_size == 0)
+	{
+		ft_nm_error_custom(file->filepath, FT_NM_FILE_FORMAT_ERROR);
+		file->recoverable_error |= 1;
+		return (0);
+	}
 	file->elf_data.data = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, file->fd, 0);
 	if (file->elf_data.data == MAP_FAILED)
 	{
