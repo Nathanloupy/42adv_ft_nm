@@ -1,6 +1,23 @@
 #include "ft_nm.h"
 
 /**
+ * @brief Compare two strings in ASCII order
+ * 
+ * @param s1 The first string to compare
+ * @param s2 The second string to compare
+ * @return int 
+ */
+static int	ft_nm_strcmp(char *s1, char *s2)
+{
+	int		i;
+
+	i = 0;
+	while (s1[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+/**
  * @brief Sort symbols in ASCII order
  * 
  * @param file 
@@ -13,9 +30,7 @@ int	sort_symbols(t_file *file)
 	size_t		i;
 	size_t		j;
 	char		*name_i;
-	size_t		len_i;
 	char		*name_j;
-	size_t		len_j;
 	int			multiplier = 1;
 
 	if (file->context->flags & FT_NM_NO_SORT_FLAG)
@@ -27,10 +42,8 @@ int	sort_symbols(t_file *file)
 		for (j = i + 1; j < file->elf_data.parsed_symbols_size; j++)
 		{
 			name_i = file->elf_data.parsed_symbols[i].name;
-			len_i = ft_strlen(name_i);
 			name_j = file->elf_data.parsed_symbols[j].name;
-			len_j = ft_strlen(name_j);
-			if (ft_strncmp(name_i, name_j, MAX(len_i, len_j)) * multiplier > 0)
+			if (ft_nm_strcmp(name_i, name_j) * multiplier > 0)
 			{
 				temp = file->elf_data.parsed_symbols[i];
 				file->elf_data.parsed_symbols[i] = file->elf_data.parsed_symbols[j];
