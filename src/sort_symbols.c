@@ -26,7 +26,7 @@ int	sort_symbols(t_file *file)
 		{
 			name_i = file->elf_data.parsed_symbols[i].name;
 			name_j = file->elf_data.parsed_symbols[j].name;
-			if (ft_strncmp(name_i, name_j, ft_strlen(name_i)) * multiplier > 0)
+			if (ft_strncmp(name_i, name_j, MAX(ft_strlen(name_i), ft_strlen(name_j))) * multiplier > 0)
 			{
 				temp = file->elf_data.parsed_symbols[i];
 				file->elf_data.parsed_symbols[i] = file->elf_data.parsed_symbols[j];

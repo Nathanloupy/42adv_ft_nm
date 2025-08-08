@@ -43,7 +43,7 @@ static void	display_single_symbol(t_symbol *symbol, t_file *file)
 	if (symbol->type_char == 'U' || symbol->type_char == 'w' || symbol->type_char == 'v')
 		ft_putstr_fd("                ", 1);
 	else
-		print_hex_lower(symbol->value, !file->elf_data.is_64bit);
+		print_hex_lower(symbol->value, file->elf_data.is_64bit);
 	ft_putstr_fd(" ", 1);
 	ft_putchar_fd(symbol->type_char, 1);
 	ft_putstr_fd(" ", 1);

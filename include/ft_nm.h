@@ -18,6 +18,8 @@
 #define FT_NM_REVERSE_SORT_FLAG	(1 << 3)
 #define FT_NM_NO_SORT_FLAG		(1 << 4)
 
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+
 /* STRUCTS */
 typedef struct s_symbol {
 	char			*name;

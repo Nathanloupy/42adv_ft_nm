@@ -56,7 +56,7 @@ static int	parse_symbols_64(t_file *file)
 	if (file->elf_data.symtab_entsize != sizeof(Elf64_Sym) || file->elf_data.symtab_size == 0)
 		return (error_file_format(file));
 	sym_count = file->elf_data.symtab_size / file->elf_data.symtab_entsize;
-	file->elf_data.parsed_symbols = ft_calloc(sym_count, sizeof(Elf64_Sym));
+	file->elf_data.parsed_symbols = ft_calloc(sym_count, sizeof(t_symbol));
 	if (!file->elf_data.parsed_symbols)
 	{
 		ft_nm_perror(NULL);
@@ -108,7 +108,7 @@ static int	parse_symbols_32(t_file *file)
 	if (file->elf_data.symtab_entsize != sizeof(Elf32_Sym) || file->elf_data.symtab_size == 0)
 		return (error_file_format(file));
 	sym_count = file->elf_data.symtab_size / file->elf_data.symtab_entsize;
-	file->elf_data.parsed_symbols = ft_calloc(sym_count, sizeof(Elf32_Sym));
+	file->elf_data.parsed_symbols = ft_calloc(sym_count, sizeof(t_symbol));
 	if (!file->elf_data.parsed_symbols)
 	{
 		ft_nm_perror(NULL);
