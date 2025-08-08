@@ -15,7 +15,8 @@
 
 #define FT_NM_FILE_FORMAT_ERROR "file format not recognized"
 
-/* ENUMS */
+#define FT_NM_REVERSE_SORT_FLAG	(1 << 3)
+#define FT_NM_NO_SORT_FLAG		(1 << 4)
 
 /* STRUCTS */
 typedef struct s_symbol {
@@ -40,21 +41,23 @@ typedef struct s_elf_data {
 
 typedef struct s_file
 {
-	char			*filepath;
-	int				fd;
-	int				recoverable_error;
-	struct s_file	*next;
-	t_elf_data		elf_data;
+	char				*filepath;
+	int					fd;
+	int					recoverable_error;
+	struct s_file		*next;
+	t_elf_data			elf_data;
+	struct s_nm_context	*context;
 }	t_file;
 
 typedef struct s_nm_context
 {
 	t_file			*files;
+	int				flags;
 	int				recoverable_error;
 }	t_nm_context;
 
 /* FILES */
-t_file	*ft_flnew(char *filepath, int fd);
+t_file	*ft_flnew(char *filepath, int fd, t_nm_context *context);
 t_file	*ft_fllast(t_file *file);
 void	ft_fladd_back(t_file **file, t_file *new);
 void	ft_flclear(t_file **file, void (*del)(void*));

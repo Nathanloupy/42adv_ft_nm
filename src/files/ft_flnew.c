@@ -1,6 +1,6 @@
 #include "ft_nm.h"
 
-t_file	*ft_flnew(char *filepath, int fd)
+t_file	*ft_flnew(char *filepath, int fd, t_nm_context *context)
 {
 	t_file	*file;
 
@@ -9,6 +9,7 @@ t_file	*ft_flnew(char *filepath, int fd)
 		return (NULL);
 	file->filepath = filepath;
 	file->fd = fd;
+	file->context = context;
 	file->next = NULL;
 	return (file);
 }
