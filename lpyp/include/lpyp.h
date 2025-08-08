@@ -33,4 +33,3 @@ int		lpyp_parse(void *data, int argc, char **argv, t_lpyp_options *options, t_lp
 int		lpyp_help(t_lpyp_options *options, char *program_name, char *description);
 int		lpyp_usage(t_lpyp_options *options, char *program_name);
 void	lpyp_reset_options(t_lpyp_options *options);
- 

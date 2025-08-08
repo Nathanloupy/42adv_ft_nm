@@ -5,7 +5,7 @@ CCFLAGS		= -Wall -Wextra -Werror
 
 NAME		= ft_nm
 
-INCLUDES	= -I./include/ -I./lpyp/include -I./lpyp/libft -I./lpyp/libft/ft_printf
+INCLUDES	= -I./include/ -I./lpyp/include -I./lpyp/libft
 
 LPYP_DIR	= lpyp
 LPYP_LIB	= $(LPYP_DIR)/lpyp.a

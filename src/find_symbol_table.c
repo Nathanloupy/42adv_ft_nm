@@ -56,13 +56,13 @@ static int	search_symbol_table_64(t_file *file, Elf64_Ehdr *ehdr, Elf64_Shdr *se
  * @brief Find the symbol table in the ELF 64-bit file, update recoverable error if any
  * 
  * @param file 
- * @retval 1 Error
- * @retval 0 Success
+ * @retval 1 Unrecoverable error
+ * @retval 0 Success or recoverable error
  */
 static int	find_symbol_table_64(t_file *file)
 {
 	Elf64_Ehdr	*ehdr = (Elf64_Ehdr *)file->elf_data.data;
-	Elf64_Shdr	*shdr = (Elf64_Shdr *)file->elf_data.data + ehdr->e_shoff;
+	Elf64_Shdr *shdr = (Elf64_Shdr *)((char *)file->elf_data.data + ehdr->e_shoff);
 
 	if (ehdr->e_shoff == 0 || ehdr->e_shnum == 0 || ehdr->e_shentsize != sizeof(Elf64_Shdr) || ehdr->e_shoff + (ehdr->e_shnum * ehdr->e_shentsize) > file->elf_data.size)
 		return (error_file_format(file));
@@ -132,13 +132,13 @@ static int	search_symbol_table_32(t_file *file, Elf32_Ehdr *ehdr, Elf32_Shdr *se
  * @brief Find the symbol table in the ELF 32-bit file, update recoverable error if any
  * 
  * @param file 
- * @retval 1 Error
- * @retval 0 Success
+ * @retval 1 Unrecoverable error
+ * @retval 0 Success or recoverable error
  */
 static int	find_symbol_table_32(t_file *file)
 {
 	Elf32_Ehdr	*ehdr = (Elf32_Ehdr *)file->elf_data.data;
-	Elf32_Shdr	*shdr = (Elf32_Shdr *)file->elf_data.data + ehdr->e_shoff;
+	Elf32_Shdr	*shdr = (Elf32_Shdr *)((char *)file->elf_data.data + ehdr->e_shoff);
 
 	if (ehdr->e_shoff == 0 || ehdr->e_shnum == 0 || ehdr->e_shentsize != sizeof(Elf32_Shdr) || ehdr->e_shoff + (ehdr->e_shnum * ehdr->e_shentsize) > file->elf_data.size)
 		return (error_file_format(file));

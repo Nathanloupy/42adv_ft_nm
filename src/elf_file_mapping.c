@@ -5,8 +5,8 @@
  * 
  * @note The file is not closed, it is the responsibility of the caller to close it
  * @param file 
- * @retval 1 Error
- * @retval 0 Success
+ * @retval 1 Unrecoverable error
+ * @retval 0 Success or recoverable error
  */
 int	map_elf_file(t_file *file)
 {

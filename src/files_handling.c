@@ -33,7 +33,7 @@ static int	handle_single_file(t_file *file)
 	if (parse_symbols(file) || file->recoverable_error)
 		return (safe_cleanup_file(file), 1);
 	sort_symbols(file);
-	display_symbols(file); //TODO: maybe later ?
+	display_symbols(file);
 	return (safe_cleanup_file(file), 0);
 }
 
@@ -61,7 +61,7 @@ static int	iterate_over_files(t_nm_context *context)
 		ft_putstr_fd(file->filepath, STDOUT_FILENO);
 		ft_putstr_fd(": \n", STDOUT_FILENO);
 		if (handle_single_file(file) && !file->recoverable_error)
-			return (1); //TODO: maybe later print the result after the whole file is processed
+			return (1);
 		context->recoverable_error |= file->recoverable_error;
 		file = file->next;
 	}

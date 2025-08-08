@@ -88,16 +88,6 @@ static int	ft_nm_parser(unsigned int key, void *data, char *argument)
 }
 
 /**
- * @brief Initialize the context with default values
- * 
- * @param context 
- */
-static void	init_context_defaults(t_nm_context *context)
-{
-	(void)context;
-}
-
-/**
  * @brief Parse command line arguments using lpyp
  * 
  * @param argc 
@@ -109,6 +99,5 @@ static void	init_context_defaults(t_nm_context *context)
 int	parse_arguments(int argc, char *argv[], t_nm_context *context)
 {
 	ft_memset(context, 0, sizeof(t_nm_context));
-	init_context_defaults(context);
 	return (lpyp_parse(context, argc, argv, ft_nm_options, ft_nm_parser));
 }
