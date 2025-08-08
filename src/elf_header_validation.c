@@ -20,5 +20,11 @@ int	validate_elf_header(t_file *file)
 	if (ft_memcmp(e_ident, ELFMAG, SELFMAG) != 0)
 		return (error_file_format(file));
 	file->elf_data.is_big_endian = (e_ident[EI_DATA] == ELFDATA2MSB);
+	if (file->elf_data.is_big_endian)
+	{
+		ft_nm_error_custom(file->filepath, FT_NM_FILE_FORMAT_ERROR);
+		file->recoverable_error |= 1;
+		return (0);
+	}
 	return (0);
 }
