@@ -48,7 +48,7 @@ $(LPYP_LIB):
 
 $(NAME): $(OBJS) $(LPYP_LIB)
 	@echo "Compiling $(NAME)..."
-	@$(CC) $(CCFLAGS) $(INCLUDES) $(OBJS) $(LPYP_LIB) $(LIBFT_LIB) -o $(NAME) -lm
+	@$(CC) $(CCFLAGS) $(INCLUDES) $(OBJS) $(LPYP_LIB) $(LIBFT_LIB) -o $(NAME)
 
 clean:
 	@rm -f $(OBJS)

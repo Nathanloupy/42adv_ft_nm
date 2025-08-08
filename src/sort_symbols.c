@@ -13,6 +13,7 @@ int	sort_symbols(t_file *file)
 	size_t		i;
 	size_t		j;
 	char		*name_i;
+	size_t		len_i;
 	char		*name_j;
 	int			multiplier = 1;
 
@@ -22,11 +23,12 @@ int	sort_symbols(t_file *file)
 		multiplier = -1;
 	for (i = 0; i < file->elf_data.parsed_symbols_size; i++)
 	{
+		name_i = file->elf_data.parsed_symbols[i].name;
+		len_i = ft_strlen(name_i);
 		for (j = i + 1; j < file->elf_data.parsed_symbols_size; j++)
 		{
-			name_i = file->elf_data.parsed_symbols[i].name;
 			name_j = file->elf_data.parsed_symbols[j].name;
-			if (ft_strncmp(name_i, name_j, MAX(ft_strlen(name_i), ft_strlen(name_j))) * multiplier > 0)
+			if (ft_strncmp(name_i, name_j, MAX(len_i, ft_strlen(name_j))) * multiplier > 0)
 			{
 				temp = file->elf_data.parsed_symbols[i];
 				file->elf_data.parsed_symbols[i] = file->elf_data.parsed_symbols[j];

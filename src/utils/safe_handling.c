@@ -35,7 +35,7 @@ static void	safe_munmap(t_file *file)
  * 
  * @param file 
  */
-void	safe_free_parsed_symbols(t_file *file)
+static void	safe_free_parsed_symbols(t_file *file)
 {
 	if (!file || !file->elf_data.parsed_symbols)
 		return ;

@@ -26,7 +26,7 @@ static int	is_external_symbol(t_symbol *symbol)
  * @brief Print a hexadecimal value in lower case
  * 
  * @param value The value to print
- * @param is8byte Whether the value is 8 or 16 bytes
+ * @param is16byte Whether the value is 8 or 16 bytes
  */
 static void	print_hex_lower(unsigned long value, char is16byte)
 {
@@ -41,7 +41,7 @@ static void	print_hex_lower(unsigned long value, char is16byte)
 			buffer16[i] = base[value & 0xF];
 			value >>= 4;
 		}
-		write(1, buffer16, 16);
+		write(STDOUT_FILENO, buffer16, 16);
 	}
 	else
 	{
@@ -50,7 +50,7 @@ static void	print_hex_lower(unsigned long value, char is16byte)
 			buffer8[i] = base[value & 0xF];
 			value >>= 4;
 		}
-		write(1, buffer8, 8);
+		write(STDOUT_FILENO, buffer8, 8);
 	}
 }
 
@@ -66,8 +66,10 @@ static void	display_single_symbol(t_symbol *symbol, t_file *file)
 		return ;
 	if (!is_external_symbol(symbol) && (file->context->flags & FT_NM_EXTERN_ONLY_FLAG))
 		return ;
-	if (is_undefined_symbol(symbol))
+	if (is_undefined_symbol(symbol) && file->elf_data.is_64bit)
 		ft_putstr_fd("                ", 1);
+	else if (is_undefined_symbol(symbol) && !file->elf_data.is_64bit)
+		ft_putstr_fd("        ", 1);
 	else
 		print_hex_lower(symbol->value, file->elf_data.is_64bit);
 	ft_putstr_fd(" ", 1);

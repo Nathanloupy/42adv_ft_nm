@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+#include <unistd.h>
 #include <elf.h>
 
 #define FT_NM_NAME "ft_nm"
@@ -14,6 +15,7 @@
 #define FT_NM_DEFAULT_FILE "a.out"
 
 #define FT_NM_FILE_FORMAT_ERROR "file format not recognized"
+#define FT_NM_NO_SYMBOLS_ERROR "no symbols"
 
 #define FT_NM_EXTERN_ONLY_FLAG		(1 << 1)
 #define FT_NM_UNDEFINED_ONLY_FLAG	(1 << 2)

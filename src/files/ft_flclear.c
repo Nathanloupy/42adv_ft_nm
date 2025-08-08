@@ -12,5 +12,4 @@ void	ft_flclear(t_file **file, void (*del)(void*))
 		ft_fldelone(*file, del);
 		*file = tmp;
 	}
-	file = NULL;
 }

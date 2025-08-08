@@ -42,7 +42,7 @@ static int	extract_symbol_table_64(t_file *file, Elf64_Shdr *shdr, Elf64_Ehdr *e
  */
 static int	search_symbol_table_64(t_file *file, Elf64_Ehdr *ehdr, Elf64_Shdr *sections, Elf64_Word section_type)
 {
-	for (int i = 0; i < ehdr->e_shnum; i++)
+	for (Elf64_Half i = 0; i < ehdr->e_shnum; i++)
 	{
 		if (sections[i].sh_type == section_type)
 		{
@@ -62,7 +62,7 @@ static int	search_symbol_table_64(t_file *file, Elf64_Ehdr *ehdr, Elf64_Shdr *se
 static int	find_symbol_table_64(t_file *file)
 {
 	Elf64_Ehdr	*ehdr = (Elf64_Ehdr *)file->elf_data.data;
-	Elf64_Shdr	*shdr = (Elf64_Shdr *)(file->elf_data.data + ehdr->e_shoff);
+	Elf64_Shdr	*shdr = (Elf64_Shdr *)file->elf_data.data + ehdr->e_shoff;
 
 	if (ehdr->e_shoff == 0 || ehdr->e_shnum == 0 || ehdr->e_shentsize != sizeof(Elf64_Shdr) || ehdr->e_shoff + (ehdr->e_shnum * ehdr->e_shentsize) > file->elf_data.size)
 		return (error_file_format(file));
@@ -71,7 +71,7 @@ static int	find_symbol_table_64(t_file *file)
 	file->elf_data.shdr_entsize = ehdr->e_shentsize;
 	if (!search_symbol_table_64(file, ehdr, shdr, SHT_SYMTAB))
 		return (0);
-	ft_nm_error_custom(file->filepath, "no symbols");
+	ft_nm_error_custom(file->filepath, FT_NM_NO_SYMBOLS_ERROR);
 	file->recoverable_error = 1;
 	return (1);
 }
@@ -118,7 +118,7 @@ static int	extract_symbol_table_32(t_file *file, Elf32_Shdr *shdr, Elf32_Ehdr *e
  */
 static int	search_symbol_table_32(t_file *file, Elf32_Ehdr *ehdr, Elf32_Shdr *sections, Elf32_Word section_type)
 {
-	for (int i = 0; i < ehdr->e_shnum; i++)
+	for (Elf32_Half i = 0; i < ehdr->e_shnum; i++)
 	{
 		if (sections[i].sh_type == section_type)
 		{
@@ -138,7 +138,7 @@ static int	search_symbol_table_32(t_file *file, Elf32_Ehdr *ehdr, Elf32_Shdr *se
 static int	find_symbol_table_32(t_file *file)
 {
 	Elf32_Ehdr	*ehdr = (Elf32_Ehdr *)file->elf_data.data;
-	Elf32_Shdr	*shdr = (Elf32_Shdr *)(file->elf_data.data + ehdr->e_shoff);
+	Elf32_Shdr	*shdr = (Elf32_Shdr *)file->elf_data.data + ehdr->e_shoff;
 
 	if (ehdr->e_shoff == 0 || ehdr->e_shnum == 0 || ehdr->e_shentsize != sizeof(Elf32_Shdr) || ehdr->e_shoff + (ehdr->e_shnum * ehdr->e_shentsize) > file->elf_data.size)
 		return (error_file_format(file));
@@ -147,7 +147,7 @@ static int	find_symbol_table_32(t_file *file)
 	file->elf_data.shdr_entsize = ehdr->e_shentsize;
 	if (!search_symbol_table_32(file, ehdr, shdr, SHT_SYMTAB))
 		return (0);
-	ft_nm_error_custom(file->filepath, "no symbols");
+	ft_nm_error_custom(file->filepath, FT_NM_NO_SYMBOLS_ERROR);
 	file->recoverable_error = 1;
 	return (1);
 }

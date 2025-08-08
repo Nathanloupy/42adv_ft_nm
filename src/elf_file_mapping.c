@@ -24,7 +24,7 @@ int	map_elf_file(t_file *file)
 	{
 		ft_nm_perror(file->filepath);
 		file->recoverable_error |= 1;
-		return (0);
+		return (1);
 	}
 	return (0);
 }
