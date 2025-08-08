@@ -1,6 +1,16 @@
 #include "ft_nm.h"
 
 /**
+ * @brief symbol The symbol to check
+ * @retval 1 Undefined
+ * @retval 0 Not undefined
+ */
+static int	is_undefined_symbol(t_symbol *symbol)
+{
+	return (symbol->type_char == 'U' || symbol->type_char == 'w' || symbol->type_char == 'v');
+}
+
+/**
  * @brief Print a hexadecimal value in lower case
  * 
  * @param value The value to print
@@ -40,7 +50,9 @@ static void	print_hex_lower(unsigned long value, char is16byte)
  */
 static void	display_single_symbol(t_symbol *symbol, t_file *file)
 {
-	if (symbol->type_char == 'U' || symbol->type_char == 'w' || symbol->type_char == 'v')
+	if (!is_undefined_symbol(symbol) && (file->context->flags & FT_NM_UNDEFINED_ONLY_FLAG))
+		return ;
+	if (is_undefined_symbol(symbol))
 		ft_putstr_fd("                ", 1);
 	else
 		print_hex_lower(symbol->value, file->elf_data.is_64bit);

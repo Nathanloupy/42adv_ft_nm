@@ -9,7 +9,8 @@ static t_lpyp_options	ft_nm_options[] = {
 {'p', "no-sort", 'p', LPYP_NO_ARG, "do not sort the symbols", NULL},
 {'r', "reverse", 'r', LPYP_NO_ARG, "reverse the sense of the sort", NULL},
 {'h', "help", 'h', LPYP_NO_ARG, "give this help list", NULL},
-{0, "usage", 'u', LPYP_NO_ARG, "give a short usage message", NULL},
+{'u', "undefined-only", 'u', LPYP_NO_ARG, "display only undefined symbols", NULL},
+{0, "usage", 'U', LPYP_NO_ARG, "give a short usage message", NULL},
 {0, NULL, LPYP_KEY_ARG, 0, NULL, "FILES..."},
 {0, NULL, 0, 0, NULL, NULL} /* Sentinel */
 };
@@ -34,10 +35,15 @@ static int	ft_nm_parser(unsigned int key, void *data, char *argument)
 			lpyp_help(ft_nm_options, FT_NM_NAME, FT_NM_DESC);
 			exit(safe_return(context, 0));
 		}
-		case 'u':
+		case 'U':
 		{
 			lpyp_usage(ft_nm_options, FT_NM_NAME);
 			exit(safe_return(context, 0));
+		}
+		case 'u':
+		{
+			context->flags |= FT_NM_UNDEFINED_ONLY_FLAG;
+			break ;
 		}
 		case 'r':
 		{

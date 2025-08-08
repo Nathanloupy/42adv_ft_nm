@@ -15,6 +15,7 @@
 
 #define FT_NM_FILE_FORMAT_ERROR "file format not recognized"
 
+#define FT_NM_UNDEFINED_ONLY_FLAG	(1 << 2)
 #define FT_NM_REVERSE_SORT_FLAG	(1 << 3)
 #define FT_NM_NO_SORT_FLAG		(1 << 4)
 
