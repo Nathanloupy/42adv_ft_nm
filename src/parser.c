@@ -5,13 +5,13 @@
 /**
  * @brief ft_nm options definition
  */
-static t_lpyp_options   ft_nm_options[] = {
-	{'p', "no-sort", 'p', LPYP_NO_ARG, "do not sort the symbols", NULL},
-	{'r', "reverse", 'r', LPYP_NO_ARG, "reverse the sense of the sort", NULL},
-	{'h', "help", 'h', LPYP_NO_ARG, "give this help list", NULL},
-	{0, "usage", 'u', LPYP_NO_ARG, "give a short usage message", NULL},
-	{0, NULL, LPYP_KEY_ARG, 0, NULL, "FILES..."},
-	{0, NULL, 0, 0, NULL, NULL} /* Sentinel */
+static t_lpyp_options	ft_nm_options[] = {
+{'p', "no-sort", 'p', LPYP_NO_ARG, "do not sort the symbols", NULL},
+{'r', "reverse", 'r', LPYP_NO_ARG, "reverse the sense of the sort", NULL},
+{'h', "help", 'h', LPYP_NO_ARG, "give this help list", NULL},
+{0, "usage", 'u', LPYP_NO_ARG, "give a short usage message", NULL},
+{0, NULL, LPYP_KEY_ARG, 0, NULL, "FILES..."},
+{0, NULL, 0, 0, NULL, NULL} /* Sentinel */
 };
 
 /**
@@ -25,7 +25,7 @@ static t_lpyp_options   ft_nm_options[] = {
  */
 static int	ft_nm_parser(unsigned int key, void *data, char *argument)
 {
-	t_nm_context *context = (t_nm_context *)data;
+	t_nm_context	*context = (t_nm_context *)data;
 
 	switch (key)
 	{
@@ -42,12 +42,12 @@ static int	ft_nm_parser(unsigned int key, void *data, char *argument)
 		case 'r':
 		{
 			context->flags |= FT_NM_REVERSE_SORT_FLAG;
-			break;
+			break ;
 		}
 		case 'p':
 		{
 			context->flags |= FT_NM_NO_SORT_FLAG;
-			break;
+			break ;
 		}
 		case LPYP_KEY_ARG:
 		{
@@ -58,13 +58,13 @@ static int	ft_nm_parser(unsigned int key, void *data, char *argument)
 				return (safe_return(context, 1));
 			}
 			ft_fladd_back(&context->files, file);
-			break;
+			break ;
 		}
 		case LPYP_KEY_END:
 		{
 			if (ft_flsize(context->files) == 0)
 				return (ft_nm_parser(LPYP_KEY_ARG, data, FT_NM_DEFAULT_FILE));
-			break;
+			break ;
 		}
 		case LPYP_KEY_UNKNOWN:
 		{

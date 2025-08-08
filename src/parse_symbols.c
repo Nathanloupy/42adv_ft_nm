@@ -1,17 +1,42 @@
 #include "ft_nm.h"
 
-/**
- * @brief Get symbol type character based on symbol info and section
- * 
- * @param bind Symbol binding
- * @param type Symbol type
- * @param shndx Section index
- * @return char Symbol type character
- */
-static char	get_symbol_type(unsigned char bind, unsigned char type, unsigned short shndx)
+/* Map section -> nm letter helpers */
+static char	map_section_to_letter_64(const Elf64_Shdr *sh)
+{
+	if (!sh)
+		return ('?');
+	if (sh->sh_type == SHT_NOBITS)
+		return ('B');
+	if (sh->sh_flags & SHF_EXECINSTR)
+		return ('T');
+	if ((sh->sh_flags & SHF_ALLOC) && (sh->sh_flags & SHF_WRITE))
+		return ('D');
+	if (sh->sh_flags & SHF_ALLOC)
+		return ('R');
+	return ('N');
+}
+
+static char	map_section_to_letter_32(const Elf32_Shdr *sh)
+{
+	if (!sh)
+		return ('?');
+	if (sh->sh_type == SHT_NOBITS)
+		return ('B');
+	if (sh->sh_flags & SHF_EXECINSTR)
+		return ('T');
+	if ((sh->sh_flags & SHF_ALLOC) && (sh->sh_flags & SHF_WRITE))
+		return ('D');
+	if (sh->sh_flags & SHF_ALLOC)
+		return ('R');
+	return ('N');
+}
+
+static char	get_symbol_type(t_file *file, unsigned char bind, unsigned char type, unsigned short shndx)
 {
 	char	c;
 
+	if (bind == STB_GNU_UNIQUE)
+		return ('u');
 	if (bind == STB_WEAK)
 	{
 		if (type == STT_OBJECT)
@@ -25,12 +50,22 @@ static char	get_symbol_type(unsigned char bind, unsigned char type, unsigned sho
 		return ('A');
 	if (shndx == SHN_COMMON)
 		return ('C');
-	if (type == STT_FUNC)
-		c = 'T';
-	else if (type == STT_OBJECT)
-		c = 'D';
+	if (file->elf_data.is_64bit)
+	{
+		const Elf64_Shdr	*sections = (const Elf64_Shdr *)file->elf_data.sections;
+		if (sections && shndx < file->elf_data.shnum)
+			c = map_section_to_letter_64(&sections[shndx]);
+		else
+			c = 'T';
+	}
 	else
-		c = 'T';
+	{
+		const Elf32_Shdr	*sections = (const Elf32_Shdr *)file->elf_data.sections;
+		if (sections && shndx < file->elf_data.shnum)
+			c = map_section_to_letter_32(&sections[shndx]);
+		else
+			c = 'T';
+	}
 	if (bind == STB_LOCAL)
 		c = ft_tolower(c);
 	return (c);
@@ -76,11 +111,11 @@ static int	parse_symbols_64(t_file *file)
 		if (ft_strlen(name) == 0 || type == STT_FILE)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		file->elf_data.parsed_symbols[sym_parsed_count].name = name;
 		file->elf_data.parsed_symbols[sym_parsed_count].value = sym->st_value;
-		file->elf_data.parsed_symbols[sym_parsed_count].type_char = get_symbol_type(bind, type, sym->st_shndx);
+		file->elf_data.parsed_symbols[sym_parsed_count].type_char = get_symbol_type(file, bind, type, sym->st_shndx);
 		sym_parsed_count++;
 		i++;
 	}
@@ -128,11 +163,11 @@ static int	parse_symbols_32(t_file *file)
 		if (ft_strlen(name) == 0 || type == STT_FILE)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		file->elf_data.parsed_symbols[sym_parsed_count].name = name;
 		file->elf_data.parsed_symbols[sym_parsed_count].value = (unsigned long)sym->st_value;
-		file->elf_data.parsed_symbols[sym_parsed_count].type_char = get_symbol_type(bind, type, sym->st_shndx);
+		file->elf_data.parsed_symbols[sym_parsed_count].type_char = get_symbol_type(file, bind, type, sym->st_shndx);
 		sym_parsed_count++;
 		i++;
 	}

@@ -46,7 +46,7 @@ static int	handle_single_file(t_file *file)
  */
 static int	iterate_over_files(t_nm_context *context)
 {
-	t_file *file = context->files;
+	t_file	*file = context->files;
 
 	while (file)
 	{
@@ -55,7 +55,7 @@ static int	iterate_over_files(t_nm_context *context)
 			ft_nm_perror(file->filepath);
 			context->recoverable_error |= 1;
 			file = file->next;
-			continue;
+			continue ;
 		}
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		ft_putstr_fd(file->filepath, STDOUT_FILENO);
@@ -77,7 +77,7 @@ static int	iterate_over_files(t_nm_context *context)
  */
 int	handle_files(t_nm_context *context)
 {
-	t_file *file = context->files;
+	t_file	*file = context->files;
 
 	if (ft_flsize(context->files) == 1)
 	{

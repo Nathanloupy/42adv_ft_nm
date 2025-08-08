@@ -9,7 +9,7 @@
  */
 int	validate_elf_header(t_file *file)
 {
-	unsigned char *e_ident;
+	unsigned char	*e_ident;
 
 	e_ident = (unsigned char *)file->elf_data.data;
 	if (file->elf_data.size < EI_CLASS)

@@ -28,17 +28,20 @@ typedef struct s_symbol {
 }	t_symbol;
 
 typedef struct s_elf_data {
-	void		*data;
-	size_t		size;
-	int			is_64bit;
-	int			is_big_endian;
-	void		*symtab;
-	void		*strtab;
-	size_t		symtab_size;
-	size_t		strtab_size;
-	size_t		symtab_entsize;
-	t_symbol	*parsed_symbols;
-	size_t		parsed_symbols_size;
+	void			*data;
+	size_t			size;
+	int				is_64bit;
+	int				is_big_endian;
+	void			*sections;
+	size_t			shdr_entsize;
+	unsigned int	shnum;
+	void			*symtab;
+	void			*strtab;
+	size_t			symtab_size;
+	size_t			strtab_size;
+	size_t			symtab_entsize;
+	t_symbol		*parsed_symbols;
+	size_t			parsed_symbols_size;
 }	t_elf_data;
 
 typedef struct s_file

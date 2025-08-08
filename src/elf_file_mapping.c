@@ -10,8 +10,8 @@
  */
 int	map_elf_file(t_file *file)
 {
-	struct stat st;
-	
+	struct stat	st;
+
 	if (fstat(file->fd, &st) == -1)
 	{
 		ft_nm_perror(file->filepath);

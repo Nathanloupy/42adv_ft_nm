@@ -66,6 +66,9 @@ static int	find_symbol_table_64(t_file *file)
 
 	if (ehdr->e_shoff == 0 || ehdr->e_shnum == 0 || ehdr->e_shentsize != sizeof(Elf64_Shdr) || ehdr->e_shoff + (ehdr->e_shnum * ehdr->e_shentsize) > file->elf_data.size)
 		return (error_file_format(file));
+	file->elf_data.sections = shdr;
+	file->elf_data.shnum = ehdr->e_shnum;
+	file->elf_data.shdr_entsize = ehdr->e_shentsize;
 	if (!search_symbol_table_64(file, ehdr, shdr, SHT_SYMTAB))
 		return (0);
 	ft_nm_error_custom(file->filepath, "no symbols");
@@ -139,6 +142,9 @@ static int	find_symbol_table_32(t_file *file)
 
 	if (ehdr->e_shoff == 0 || ehdr->e_shnum == 0 || ehdr->e_shentsize != sizeof(Elf32_Shdr) || ehdr->e_shoff + (ehdr->e_shnum * ehdr->e_shentsize) > file->elf_data.size)
 		return (error_file_format(file));
+	file->elf_data.sections = shdr;
+	file->elf_data.shnum = ehdr->e_shnum;
+	file->elf_data.shdr_entsize = ehdr->e_shentsize;
 	if (!search_symbol_table_32(file, ehdr, shdr, SHT_SYMTAB))
 		return (0);
 	ft_nm_error_custom(file->filepath, "no symbols");
