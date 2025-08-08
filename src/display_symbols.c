@@ -28,7 +28,7 @@ static int	is_external_symbol(t_symbol *symbol)
  * @param value The value to print
  * @param is16byte Whether the value is 8 or 16 bytes
  */
-static void	print_hex_lower(unsigned long value, char is16byte)
+static void	print_hex_lower(unsigned long value, int is16byte)
 {
 	char		buffer16[16];
 	char		buffer8[8];
