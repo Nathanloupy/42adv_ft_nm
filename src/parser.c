@@ -8,9 +8,9 @@
 static t_lpyp_options	ft_nm_options[] = {
 {'p', "no-sort", 'p', LPYP_NO_ARG, "do not sort the symbols", NULL},
 {'r', "reverse", 'r', LPYP_NO_ARG, "reverse the sense of the sort", NULL},
-{'h', "help", 'h', LPYP_NO_ARG, "give this help list", NULL},
 {'u', "undefined-only", 'u', LPYP_NO_ARG, "display only undefined symbols", NULL},
 {'g', "extern-only", 'g', LPYP_NO_ARG, "display only external symbols", NULL},
+{'h', "help", 'h', LPYP_NO_ARG, "give this help list", NULL},
 {0, "usage", 'U', LPYP_NO_ARG, "give a short usage message", NULL},
 {0, NULL, LPYP_KEY_ARG, 0, NULL, "FILES..."},
 {0, NULL, 0, 0, NULL, NULL} /* Sentinel */
